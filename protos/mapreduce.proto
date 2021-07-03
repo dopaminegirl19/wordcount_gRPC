@@ -1,0 +1,34 @@
+
+syntax = "proto3";
+
+package mapreduce;
+
+service MapReduce {
+    
+  // A simple RPC.
+  //
+  // Extracts files from given Path, sorts into buckets, and signals the finish. 
+  rpc Map (Path) returns (OutputPath) {}
+
+  // A simple RPC.
+  //
+  // Extracts files from given Path, does word count, and signals the finish. 
+  rpc Reduce (Path) returns (isFinished) {}
+
+}
+
+// A Path provides the path to a folder containing files to be parsed
+message Path {
+  string path = 1;
+}
+
+// A signal that the task is finished. Note that the actual text is not transferred over the gRPC. 
+message isFinished {
+  bool isfinished = 1;
+}
+
+message OutputPath {
+  string path = 1;
+}
+
+// Command line to generate pb2 and pb2_grpc files: 
