@@ -19,24 +19,38 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0fmapreduce.proto\x12\tmapreduce\"\x14\n\x04Path\x12\x0c\n\x04path\x18\x01 \x01(\t\" \n\nisFinished\x12\x12\n\nisfinished\x18\x01 \x01(\x08\"\x1a\n\nOutputPath\x12\x0c\n\x04path\x18\x01 \x01(\t2p\n\tMapReduce\x12/\n\x03Map\x12\x0f.mapreduce.Path\x1a\x15.mapreduce.OutputPath\"\x00\x12\x32\n\x06Reduce\x12\x0f.mapreduce.Path\x1a\x15.mapreduce.isFinished\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x0fmapreduce.proto\x12\tmapreduce\"@\n\nMapRequest\x12\x12\n\ninput_path\x18\x01 \x01(\t\x12\x13\n\x0boutput_path\x18\x02 \x01(\t\x12\t\n\x01M\x18\x03 \x01(\x05\"8\n\rReduceRequest\x12\x12\n\ninput_path\x18\x01 \x01(\t\x12\x13\n\x0boutput_path\x18\x02 \x01(\t\"\x1a\n\nOutputPath\x12\x0c\n\x04path\x18\x01 \x01(\t\"!\n\x0bStopRequest\x12\x12\n\nshouldstop\x18\x01 \x01(\x08\"&\n\x10ShutDownResponse\x12\x12\n\nisshutdown\x18\x01 \x01(\x08\x32\xbe\x01\n\tMapReduce\x12\x35\n\x03Map\x12\x15.mapreduce.MapRequest\x1a\x15.mapreduce.OutputPath\"\x00\x12;\n\x06Reduce\x12\x18.mapreduce.ReduceRequest\x1a\x15.mapreduce.OutputPath\"\x00\x12=\n\x04Stop\x12\x16.mapreduce.StopRequest\x1a\x1b.mapreduce.ShutDownResponse\"\x00\x62\x06proto3'
 )
 
 
 
 
-_PATH = _descriptor.Descriptor(
-  name='Path',
-  full_name='mapreduce.Path',
+_MAPREQUEST = _descriptor.Descriptor(
+  name='MapRequest',
+  full_name='mapreduce.MapRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='path', full_name='mapreduce.Path.path', index=0,
+      name='input_path', full_name='mapreduce.MapRequest.input_path', index=0,
       number=1, type=9, cpp_type=9, label=1,
       has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='output_path', full_name='mapreduce.MapRequest.output_path', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='M', full_name='mapreduce.MapRequest.M', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -53,22 +67,29 @@ _PATH = _descriptor.Descriptor(
   oneofs=[
   ],
   serialized_start=30,
-  serialized_end=50,
+  serialized_end=94,
 )
 
 
-_ISFINISHED = _descriptor.Descriptor(
-  name='isFinished',
-  full_name='mapreduce.isFinished',
+_REDUCEREQUEST = _descriptor.Descriptor(
+  name='ReduceRequest',
+  full_name='mapreduce.ReduceRequest',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   create_key=_descriptor._internal_create_key,
   fields=[
     _descriptor.FieldDescriptor(
-      name='isfinished', full_name='mapreduce.isFinished.isfinished', index=0,
-      number=1, type=8, cpp_type=7, label=1,
-      has_default_value=False, default_value=False,
+      name='input_path', full_name='mapreduce.ReduceRequest.input_path', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='output_path', full_name='mapreduce.ReduceRequest.output_path', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
@@ -84,8 +105,8 @@ _ISFINISHED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=52,
-  serialized_end=84,
+  serialized_start=96,
+  serialized_end=152,
 )
 
 
@@ -116,28 +137,94 @@ _OUTPUTPATH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=86,
-  serialized_end=112,
+  serialized_start=154,
+  serialized_end=180,
 )
 
-DESCRIPTOR.message_types_by_name['Path'] = _PATH
-DESCRIPTOR.message_types_by_name['isFinished'] = _ISFINISHED
+
+_STOPREQUEST = _descriptor.Descriptor(
+  name='StopRequest',
+  full_name='mapreduce.StopRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='shouldstop', full_name='mapreduce.StopRequest.shouldstop', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=182,
+  serialized_end=215,
+)
+
+
+_SHUTDOWNRESPONSE = _descriptor.Descriptor(
+  name='ShutDownResponse',
+  full_name='mapreduce.ShutDownResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='isshutdown', full_name='mapreduce.ShutDownResponse.isshutdown', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=217,
+  serialized_end=255,
+)
+
+DESCRIPTOR.message_types_by_name['MapRequest'] = _MAPREQUEST
+DESCRIPTOR.message_types_by_name['ReduceRequest'] = _REDUCEREQUEST
 DESCRIPTOR.message_types_by_name['OutputPath'] = _OUTPUTPATH
+DESCRIPTOR.message_types_by_name['StopRequest'] = _STOPREQUEST
+DESCRIPTOR.message_types_by_name['ShutDownResponse'] = _SHUTDOWNRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-Path = _reflection.GeneratedProtocolMessageType('Path', (_message.Message,), {
-  'DESCRIPTOR' : _PATH,
+MapRequest = _reflection.GeneratedProtocolMessageType('MapRequest', (_message.Message,), {
+  'DESCRIPTOR' : _MAPREQUEST,
   '__module__' : 'mapreduce_pb2'
-  # @@protoc_insertion_point(class_scope:mapreduce.Path)
+  # @@protoc_insertion_point(class_scope:mapreduce.MapRequest)
   })
-_sym_db.RegisterMessage(Path)
+_sym_db.RegisterMessage(MapRequest)
 
-isFinished = _reflection.GeneratedProtocolMessageType('isFinished', (_message.Message,), {
-  'DESCRIPTOR' : _ISFINISHED,
+ReduceRequest = _reflection.GeneratedProtocolMessageType('ReduceRequest', (_message.Message,), {
+  'DESCRIPTOR' : _REDUCEREQUEST,
   '__module__' : 'mapreduce_pb2'
-  # @@protoc_insertion_point(class_scope:mapreduce.isFinished)
+  # @@protoc_insertion_point(class_scope:mapreduce.ReduceRequest)
   })
-_sym_db.RegisterMessage(isFinished)
+_sym_db.RegisterMessage(ReduceRequest)
 
 OutputPath = _reflection.GeneratedProtocolMessageType('OutputPath', (_message.Message,), {
   'DESCRIPTOR' : _OUTPUTPATH,
@@ -145,6 +232,20 @@ OutputPath = _reflection.GeneratedProtocolMessageType('OutputPath', (_message.Me
   # @@protoc_insertion_point(class_scope:mapreduce.OutputPath)
   })
 _sym_db.RegisterMessage(OutputPath)
+
+StopRequest = _reflection.GeneratedProtocolMessageType('StopRequest', (_message.Message,), {
+  'DESCRIPTOR' : _STOPREQUEST,
+  '__module__' : 'mapreduce_pb2'
+  # @@protoc_insertion_point(class_scope:mapreduce.StopRequest)
+  })
+_sym_db.RegisterMessage(StopRequest)
+
+ShutDownResponse = _reflection.GeneratedProtocolMessageType('ShutDownResponse', (_message.Message,), {
+  'DESCRIPTOR' : _SHUTDOWNRESPONSE,
+  '__module__' : 'mapreduce_pb2'
+  # @@protoc_insertion_point(class_scope:mapreduce.ShutDownResponse)
+  })
+_sym_db.RegisterMessage(ShutDownResponse)
 
 
 
@@ -155,15 +256,15 @@ _MAPREDUCE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=114,
-  serialized_end=226,
+  serialized_start=258,
+  serialized_end=448,
   methods=[
   _descriptor.MethodDescriptor(
     name='Map',
     full_name='mapreduce.MapReduce.Map',
     index=0,
     containing_service=None,
-    input_type=_PATH,
+    input_type=_MAPREQUEST,
     output_type=_OUTPUTPATH,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
@@ -173,8 +274,18 @@ _MAPREDUCE = _descriptor.ServiceDescriptor(
     full_name='mapreduce.MapReduce.Reduce',
     index=1,
     containing_service=None,
-    input_type=_PATH,
-    output_type=_ISFINISHED,
+    input_type=_REDUCEREQUEST,
+    output_type=_OUTPUTPATH,
+    serialized_options=None,
+    create_key=_descriptor._internal_create_key,
+  ),
+  _descriptor.MethodDescriptor(
+    name='Stop',
+    full_name='mapreduce.MapReduce.Stop',
+    index=2,
+    containing_service=None,
+    input_type=_STOPREQUEST,
+    output_type=_SHUTDOWNRESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

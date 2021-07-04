@@ -1,5 +1,5 @@
 import futures3
-import threading
+import threading 
 import logging
 import re
 import os
@@ -113,22 +113,29 @@ def reduce_files(fnames_list, m, output_dir):
 class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
     """Provides methods that implement functionality of map reduce server."""
 
-    def __init__(self):
-        self.M = 4                                                  # number of buckets 
-        self.intermediate_output_dir = "outputs/intermediate"           # output dir for intermediate outputs (after mapping)
-        self.final_output_dir = "outputs/out"                           # output dir for final outputs (after reduce)
+    def __init__(self, stop_event):
+        self._stop_event = stop_event
+        
+    def Stop(self, request, context):
+        if request.shouldstop:
+            self._stop_event.set()
+            return mapreduce_pb2.ShutDownResponse(isshutdown = True)
+        else:
+            pass
 
     def Map(self, request, context):
         
+        self.M = request.M
+        
         # Prepare output dir: 
-        make_output_dirs(self.intermediate_output_dir)
+        make_output_dirs(request.output_path)
         
         # Get txt files:
-        txt_files = get_txt_files(request.path)
+        txt_files = get_txt_files(request.input_path)
 
         # Loop through files and perform mapping function:
         for c, file in enumerate(txt_files):
-            output_fname_list = map_one_file(file, c, self.M, self.intermediate_output_dir)
+            output_fname_list = map_one_file(file, c, request.M, request.output_path)
         
         # Flag finished: 
         return mapreduce_pb2.OutputPath(path="outputs/intermediate")
@@ -136,26 +143,29 @@ class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
     def Reduce(self, request, context):
         
         # Prepare output dir:
-        make_output_dirs(self.final_output_dir)
+        make_output_dirs(request.output_path)
         
         # Loop through buckets and get corresponding intermediate files 
         for m in range(self.M):
-            bucket_files = get_bucket_files(request.path, m)
+            bucket_files = get_bucket_files(request.input_path, m)
             
             # Reduce to one file and save in output directory 
-            fname_out = reduce_files(bucket_files, m, self.final_output_dir)
-        
+            fname_out = reduce_files(bucket_files, m, request.output_path)
         
         # Flag finished: 
-        return mapreduce_pb2.isFinished(isfinished = True)
+        return mapreduce_pb2.OutputPath(path = request.output_path)
+        
     
 def serve():
+    stop_event = threading.Event() # *
     server = grpc.server(futures3.ThreadPoolExecutor(max_workers=10))
     mapreduce_pb2_grpc.add_MapReduceServicer_to_server(
-        MapReduceServicer(), server)
+        MapReduceServicer(stop_event), server)
     server.add_insecure_port('[::]:50051')
     server.start()
-    server.wait_for_termination()
+    # server.wait_for_termination()
+    stop_event.wait() # *
+    server.stop(grace = None) # *
 
 
 if __name__ == '__main__':
