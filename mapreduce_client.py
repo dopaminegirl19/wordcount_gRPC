@@ -26,12 +26,12 @@ def run():
         output_path = f2intermediate, 
         M=M
         ))
-    for responses in responses:
+    for response in responses:
         print(response.path)
     
     # Reduce:
-    print("=== Map complete. Output files at: {}. Now starting reduce.".format(str(response.path)))
-    print("Reduce files:")
+    print("=== Map complete. Starting reduce. ")
+    print("=== Reduce files:")
     responses = stub.Reduce(mapreduce_pb2.ReduceRequest(
         input_path = f2intermediate, 
         output_path =f2outputs
