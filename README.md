@@ -40,8 +40,8 @@ See **Map Task** and **Reduce Task** sections for details.
 ## Brief overview of code ##
  - This code uses [gRPC.io](https://grpc.io/) which is google's framework for RPC (remote procedure call). 
  -  ```protos/mapreduce.proto``` specifies the data types and structure in the messages conveyed between the client and the server.
- -  ```mapreduce_pb2.py``` and  ```mapreduce_pb2_grpc.py``` are automatically generated scripts which facilitate the interface between the client, server, and protocol buffer.
- -  ```mapreduce_server.py``` carries out the processes requested by the client.
+ -  ```mapreduce_pb2.py``` and  ```mapreduce_pb2_grpc.py``` are automatically generated scripts which enable interfacing between the client and server, based on the protocol buffer.
+ -  ```mapreduce_server.py``` receives the requests from the client, and carries out the processes.
  -  ```mapreduce_client.py``` receives the user input and formulates the request to send to the server. The user inputs are:
    -  ```p2_inputs``` (string) is the relative path to the .txt files to be parsed 
    - ```p2_intermediate``` (string) is the relative path to the folder in which the server should store the intermediate output files.
@@ -54,7 +54,7 @@ See **Map Task** and **Reduce Task** sections for details.
  1. ```output_path``` (string), relative path to folder containing intermediate output files
  1. ```M``` (int32), number of buckets <br>
 
- The map task is carried out by the server. The server takes the input files, separates text into single words, and puts each word into a "bucket" (intermediate file). The bucket is decided by (first letter of the word) % M. Thus, a total of M files are produced, and each have one word on each line.<br>
+ The map task is carried out by the server. The server takes the input files, separates text into single words, and puts each word into a "bucket" (intermediate file). The bucket is decided by (first letter of the word) % M. Thus, a total of M * number of .txt files are produced, and each have one word on each line.<br>
  These intermediate files are saved in the specified output_path.<br>
  
 The map task returns a ```stream``` of output file names, which are displayed to the user as they are saved. This is because in theory there could be a great many input .txt files to parse, so this way the user can follow the progress of the server. 
@@ -63,5 +63,10 @@ The map task returns a ```stream``` of output file names, which are displayed to
  The reduce task is called with a ReduceRequest, consisting of:
  1. ```input_path``` (string), relative path to folder containing intermediate files to parse
  1. ```output_path``` (string), relative path to folder containing output files
+ 
+ The reduce task is carried out by the server. The server takes the input files, pools words from buckets with the same id, and counts the occurence of each word. Thus, a total of M files are produced, and each have one word on each line, followed by its frequency across all the original .txt files.<br>
+ These final output files are saved in the specified output_path.<br>
+ 
+ As in the map task, the reduce task returns a ```stream``` of output file names, which are displayed to the user as they are saved. 
  
  
