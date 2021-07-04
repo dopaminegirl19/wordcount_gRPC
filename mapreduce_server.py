@@ -71,7 +71,7 @@ def map_one_file(path, n, M, output_path):
 
         output_fname_list.append(fname_out)                             # keep a list of the output txt files to return to the client 
 
-    return output_fname_list
+    return '\n'.join(output_fname_list)
 
 
 def reduce_files(fnames_list, m, output_dir):
@@ -135,10 +135,9 @@ class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
 
         # Loop through files and perform mapping function:
         for c, file in enumerate(txt_files):
-            output_fname_list = map_one_file(file, c, request.M, request.output_path)
+            out_fname_list = map_one_file(file, c, request.M, request.output_path)
         
-        # Flag finished: 
-        return mapreduce_pb2.OutputPath(path="outputs/intermediate")
+            yield mapreduce_pb2.OutputPath(path = out_fname_list)
         
     def Reduce(self, request, context):
         

@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0fmapreduce.proto\x12\tmapreduce\"@\n\nMapRequest\x12\x12\n\ninput_path\x18\x01 \x01(\t\x12\x13\n\x0boutput_path\x18\x02 \x01(\t\x12\t\n\x01M\x18\x03 \x01(\x05\"8\n\rReduceRequest\x12\x12\n\ninput_path\x18\x01 \x01(\t\x12\x13\n\x0boutput_path\x18\x02 \x01(\t\"\x1a\n\nOutputPath\x12\x0c\n\x04path\x18\x01 \x01(\t\"!\n\x0bStopRequest\x12\x12\n\nshouldstop\x18\x01 \x01(\x08\"&\n\x10ShutDownResponse\x12\x12\n\nisshutdown\x18\x01 \x01(\x08\x32\xc0\x01\n\tMapReduce\x12\x35\n\x03Map\x12\x15.mapreduce.MapRequest\x1a\x15.mapreduce.OutputPath\"\x00\x12=\n\x06Reduce\x12\x18.mapreduce.ReduceRequest\x1a\x15.mapreduce.OutputPath\"\x00\x30\x01\x12=\n\x04Stop\x12\x16.mapreduce.StopRequest\x1a\x1b.mapreduce.ShutDownResponse\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x0fmapreduce.proto\x12\tmapreduce\"@\n\nMapRequest\x12\x12\n\ninput_path\x18\x01 \x01(\t\x12\x13\n\x0boutput_path\x18\x02 \x01(\t\x12\t\n\x01M\x18\x03 \x01(\x05\"8\n\rReduceRequest\x12\x12\n\ninput_path\x18\x01 \x01(\t\x12\x13\n\x0boutput_path\x18\x02 \x01(\t\"\x1a\n\nOutputPath\x12\x0c\n\x04path\x18\x01 \x01(\t\"!\n\x0bStopRequest\x12\x12\n\nshouldstop\x18\x01 \x01(\x08\"&\n\x10ShutDownResponse\x12\x12\n\nisshutdown\x18\x01 \x01(\x08\x32\xc2\x01\n\tMapReduce\x12\x37\n\x03Map\x12\x15.mapreduce.MapRequest\x1a\x15.mapreduce.OutputPath\"\x00\x30\x01\x12=\n\x06Reduce\x12\x18.mapreduce.ReduceRequest\x1a\x15.mapreduce.OutputPath\"\x00\x30\x01\x12=\n\x04Stop\x12\x16.mapreduce.StopRequest\x1a\x1b.mapreduce.ShutDownResponse\"\x00\x62\x06proto3'
 )
 
 
@@ -257,7 +257,7 @@ _MAPREDUCE = _descriptor.ServiceDescriptor(
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
   serialized_start=258,
-  serialized_end=450,
+  serialized_end=452,
   methods=[
   _descriptor.MethodDescriptor(
     name='Map',

@@ -14,7 +14,7 @@ class MapReduceStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.Map = channel.unary_unary(
+        self.Map = channel.unary_stream(
                 '/mapreduce.MapReduce/Map',
                 request_serializer=mapreduce__pb2.MapRequest.SerializeToString,
                 response_deserializer=mapreduce__pb2.OutputPath.FromString,
@@ -37,7 +37,7 @@ class MapReduceServicer(object):
     def Map(self, request, context):
         """A simple RPC.
 
-        Extracts files from given Path, sorts into buckets, and signals the finish. 
+        Extracts files from given Path, sorts into buckets, and returns the output file names as they are saved.
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -46,14 +46,14 @@ class MapReduceServicer(object):
     def Reduce(self, request, context):
         """A simple RPC.
 
-        Extracts files from given Path, does word count, and signals the finish. 
+        Extracts files from given Path, does word count, and returns the output file names as they are saved. 
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
     def Stop(self, request, context):
-        """Shutdown RPC.
+        """Server shutdown RPC.
 
         """
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
@@ -63,7 +63,7 @@ class MapReduceServicer(object):
 
 def add_MapReduceServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'Map': grpc.unary_unary_rpc_method_handler(
+            'Map': grpc.unary_stream_rpc_method_handler(
                     servicer.Map,
                     request_deserializer=mapreduce__pb2.MapRequest.FromString,
                     response_serializer=mapreduce__pb2.OutputPath.SerializeToString,
@@ -99,7 +99,7 @@ class MapReduce(object):
             wait_for_ready=None,
             timeout=None,
             metadata=None):
-        return grpc.experimental.unary_unary(request, target, '/mapreduce.MapReduce/Map',
+        return grpc.experimental.unary_stream(request, target, '/mapreduce.MapReduce/Map',
             mapreduce__pb2.MapRequest.SerializeToString,
             mapreduce__pb2.OutputPath.FromString,
             options, channel_credentials,
