@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0fmapreduce.proto\x12\tmapreduce\"@\n\nMapRequest\x12\x12\n\ninput_path\x18\x01 \x01(\t\x12\x13\n\x0boutput_path\x18\x02 \x01(\t\x12\t\n\x01M\x18\x03 \x01(\x05\"8\n\rReduceRequest\x12\x12\n\ninput_path\x18\x01 \x01(\t\x12\x13\n\x0boutput_path\x18\x02 \x01(\t\" \n\nisFinished\x12\x12\n\nisfinished\x18\x01 \x01(\x08\"\x1a\n\nOutputPath\x12\x0c\n\x04path\x18\x01 \x01(\t\"!\n\x0bStopRequest\x12\x12\n\nshouldstop\x18\x01 \x01(\x08\x32\xb8\x01\n\tMapReduce\x12\x35\n\x03Map\x12\x15.mapreduce.MapRequest\x1a\x15.mapreduce.OutputPath\"\x00\x12;\n\x06Reduce\x12\x18.mapreduce.ReduceRequest\x1a\x15.mapreduce.isFinished\"\x00\x12\x37\n\x04Stop\x12\x16.mapreduce.StopRequest\x1a\x15.mapreduce.isFinished\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x0fmapreduce.proto\x12\tmapreduce\"@\n\nMapRequest\x12\x12\n\ninput_path\x18\x01 \x01(\t\x12\x13\n\x0boutput_path\x18\x02 \x01(\t\x12\t\n\x01M\x18\x03 \x01(\x05\"8\n\rReduceRequest\x12\x12\n\ninput_path\x18\x01 \x01(\t\x12\x13\n\x0boutput_path\x18\x02 \x01(\t\" \n\nisFinished\x12\x12\n\nisfinished\x18\x01 \x01(\x08\"\x1a\n\nOutputPath\x12\x0c\n\x04path\x18\x01 \x01(\t\"!\n\x0bStopRequest\x12\x12\n\nshouldstop\x18\x01 \x01(\x08\"&\n\x10ShutDownResponse\x12\x12\n\nisshutdown\x18\x01 \x01(\x08\x32\xbe\x01\n\tMapReduce\x12\x35\n\x03Map\x12\x15.mapreduce.MapRequest\x1a\x15.mapreduce.OutputPath\"\x00\x12;\n\x06Reduce\x12\x18.mapreduce.ReduceRequest\x1a\x15.mapreduce.isFinished\"\x00\x12=\n\x04Stop\x12\x16.mapreduce.StopRequest\x1a\x1b.mapreduce.ShutDownResponse\"\x00\x62\x06proto3'
 )
 
 
@@ -205,11 +205,44 @@ _STOPREQUEST = _descriptor.Descriptor(
   serialized_end=249,
 )
 
+
+_SHUTDOWNRESPONSE = _descriptor.Descriptor(
+  name='ShutDownResponse',
+  full_name='mapreduce.ShutDownResponse',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='isshutdown', full_name='mapreduce.ShutDownResponse.isshutdown', index=0,
+      number=1, type=8, cpp_type=7, label=1,
+      has_default_value=False, default_value=False,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=251,
+  serialized_end=289,
+)
+
 DESCRIPTOR.message_types_by_name['MapRequest'] = _MAPREQUEST
 DESCRIPTOR.message_types_by_name['ReduceRequest'] = _REDUCEREQUEST
 DESCRIPTOR.message_types_by_name['isFinished'] = _ISFINISHED
 DESCRIPTOR.message_types_by_name['OutputPath'] = _OUTPUTPATH
 DESCRIPTOR.message_types_by_name['StopRequest'] = _STOPREQUEST
+DESCRIPTOR.message_types_by_name['ShutDownResponse'] = _SHUTDOWNRESPONSE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
 MapRequest = _reflection.GeneratedProtocolMessageType('MapRequest', (_message.Message,), {
@@ -247,6 +280,13 @@ StopRequest = _reflection.GeneratedProtocolMessageType('StopRequest', (_message.
   })
 _sym_db.RegisterMessage(StopRequest)
 
+ShutDownResponse = _reflection.GeneratedProtocolMessageType('ShutDownResponse', (_message.Message,), {
+  'DESCRIPTOR' : _SHUTDOWNRESPONSE,
+  '__module__' : 'mapreduce_pb2'
+  # @@protoc_insertion_point(class_scope:mapreduce.ShutDownResponse)
+  })
+_sym_db.RegisterMessage(ShutDownResponse)
+
 
 
 _MAPREDUCE = _descriptor.ServiceDescriptor(
@@ -256,8 +296,8 @@ _MAPREDUCE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=252,
-  serialized_end=436,
+  serialized_start=292,
+  serialized_end=482,
   methods=[
   _descriptor.MethodDescriptor(
     name='Map',
@@ -285,7 +325,7 @@ _MAPREDUCE = _descriptor.ServiceDescriptor(
     index=2,
     containing_service=None,
     input_type=_STOPREQUEST,
-    output_type=_ISFINISHED,
+    output_type=_SHUTDOWNRESPONSE,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
   ),

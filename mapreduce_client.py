@@ -1,4 +1,5 @@
 import logging
+import sys
 
 import grpc
 
@@ -28,14 +29,16 @@ def run():
     
     # Reduce: 
     print("Starting reduce.")
-    fin = stub.Reduce(mapreduce_pb2.ReduceRequest(input_path = f2intermediate, output_path =f2outputs))
+    fin = stub.Reduce(mapreduce_pb2.ReduceRequest(input_path = response.path, output_path =f2outputs))
     if fin: #fin.isfinished:
         print("Reduce complete. Final output files at: ".format(f2outputs))
         
         # Close server:
         print("Task complete. Closing servers.")
-        server_closed = stub.Stop(mapreduce_pb2.StopRequest(shouldstop = 1))
-        print("Client will close now.")
+        response = stub.Stop(mapreduce_pb2.StopRequest(shouldstop = True))
+        if response.isshutdown:
+            print("Servers closed, client will now exit.")
+            sys.exit(0)
         
 
 if __name__ == '__main__':

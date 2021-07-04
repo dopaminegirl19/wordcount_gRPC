@@ -1,4 +1,5 @@
 import futures3
+import threading 
 import logging
 import re
 import os
@@ -112,7 +113,15 @@ def reduce_files(fnames_list, m, output_dir):
 class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
     """Provides methods that implement functionality of map reduce server."""
 
-    #def __init__(self):
+    def __init__(self, stop_event):
+        self._stop_event = stop_event
+        
+    def Stop(self, request, context):
+        if request.shouldstop:
+            self._stop_event.set()
+            return mapreduce_pb2.ShutDownResponse(isshutdown = True)
+        else:
+            pass
 
     def Map(self, request, context):
         
@@ -145,22 +154,18 @@ class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
         
         # Flag finished: 
         return mapreduce_pb2.isFinished(isfinished = True)
-    
-    def Stop(self, request, context):
-        # Stop server
-        if request.shouldstop:
-            return server.stop(grace = None)
-        else:
-            pass
         
     
 def serve():
+    stop_event = threading.Event() # *
     server = grpc.server(futures3.ThreadPoolExecutor(max_workers=10))
     mapreduce_pb2_grpc.add_MapReduceServicer_to_server(
-        MapReduceServicer(), server)
+        MapReduceServicer(stop_event), server)
     server.add_insecure_port('[::]:50051')
     server.start()
-    server.wait_for_termination()
+    # server.wait_for_termination()
+    stop_event.wait() # *
+    server.stop(grace = None) # *
 
 
 if __name__ == '__main__':
