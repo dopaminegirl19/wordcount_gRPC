@@ -38,7 +38,7 @@ See **Map Task** and **Reduce Task** sections for details.
 1. The server feeds metadata about the process to the client, so in your client terminal you will be informed as the output files are generated and saved. 
  
 ## Brief overview of code ##
- - This code uses [gRPC](https://grpc.io/) which is google's framework for RPC (remote procedure call). 
+ - This code uses [gRPC.io](https://grpc.io/) which is google's framework for RPC (remote procedure call). 
  -  ```protos/mapreduce.proto``` specifies the data types and structure in the messages conveyed between the client and the server.
  -  ```mapreduce_pb2.py``` and  ```mapreduce_pb2_grpc.py``` are automatically generated scripts which facilitate the interface between the client, server, and protocol buffer.
  -  ```mapreduce_server.py``` carries out the processes requested by the client.
@@ -60,7 +60,8 @@ See **Map Task** and **Reduce Task** sections for details.
 The map task returns a ```stream``` of output file names, which are displayed to the user as they are saved. This is because in theory there could be a great many input .txt files to parse, so this way the user can follow the progress of the server. 
  
  ### Reduce Task ###
- 
- 
+ The reduce task is called with a ReduceRequest, consisting of:
+ 1. ```input_path``` (string), relative path to folder containing intermediate files to parse
+ 1. ```output_path``` (string), relative path to folder containing output files
  
  
