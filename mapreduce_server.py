@@ -16,17 +16,12 @@ def make_output_dirs(output_dir):
         print("Making output directory at: {}".format(output_dir))
         os.makedirs(output_dir)
     return None
-        
-def get_txt_files(path):
-    """Takes a path and returns a list of the files in that directory that end in .txt"""
-    
-    return [os.path.join(path, os.listdir(path)[i]) for i in range(len(os.listdir(path))) if os.listdir(path)[i].endswith('.txt')]
 
-def get_bucket_files(path, m):
-    """Takes a path and returns a list of the files in that directory that end in m"""
+def get_files(path, end):
+    """Takes a path and returns a list of the files in that directory that end in end arg (must be string)"""
     
-    return [os.path.join(path, os.listdir(path)[i]) for i in range(len(os.listdir(path))) if os.listdir(path)[i][-1] == str(m)]
-        
+    return [os.path.join(path, os.listdir(path)[i]) for i in range(len(os.listdir(path))) if os.listdir(path)[i].endswith(end)]
+       
 def map_one_file(path, n, M, output_path):
     
     """Takes a single .txt file and returns buckets of words separated by fractions of M 
@@ -131,7 +126,7 @@ class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
         make_output_dirs(request.output_path)
         
         # Get txt files:
-        txt_files = get_txt_files(request.input_path)
+        txt_files = get_files(request.input_path, '.txt')
 
         # Loop through files and perform mapping function:
         for c, file in enumerate(txt_files):
@@ -146,7 +141,7 @@ class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
         
         # Loop through buckets and get corresponding intermediate files 
         for m in range(self.M):
-            bucket_files = get_bucket_files(request.input_path, m)
+            bucket_files = get_files(request.input_path, str(m))
             
             # Reduce to one file and save in output directory, then report to client
             fname_out = reduce_files(bucket_files, m, request.output_path)
