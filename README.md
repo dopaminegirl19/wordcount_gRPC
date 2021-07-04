@@ -26,14 +26,22 @@ Each map task id corresponds to an original .txt file, and each reduce task id c
 See **Map Task** and **Reduce Task** sections for details.
  
  ## How to run ##
-1. First clone the repo:
+1. Create and enter a virtualenv with the required dependencies:
+```python -m pip install virtualenv
+    virtualenv venv
+    source venv/bin/activate
+    python -m pip install grpcio
+    python -m pip install grpcio-tools
+    python -m pip install futures3
+```
+1. Next, clone the repo:
  ``` git clone https://github.com/dopaminegirl19/wordcount_gRPC.git```
  - You can use the inputs folder provided in the repo, or your own. In the case of the latter, open up  ```mapreduce_client.py``` and update  ```p2inputs``` as the relative path to your desired inputs folder.
  - Similarly, you can specify the desired path to your outputs folder in  ```mapreduce_client.py```.
 1. Then ```cd wordcount_gRPC``` or wherever your cloned repo is.
-1. Open up a terminal window and start the server:
+1. Open up a terminal window and start the server (make sure your virtualenv from before is activated):
  ``` python mapreduce_server.py```
-1. In another terminal window, start the client:
+1. In another terminal window, start the client (also in the virtualenv):
   ``` python mapreduce_client.py```
 1. The server feeds metadata about the process to the client, so in your client terminal you will be informed as the output files are generated and saved. 
  
