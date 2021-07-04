@@ -23,6 +23,10 @@ message MapRequest {
   int32 M = 3;              // number of buckets  
 }
 
+message Path {
+  string input_path = 1;          // path to input files 
+}
+
 message ReduceRequest {
   string input_path = 1;    // path to input files (e.g. output of map task)
   string output_path = 2;   // path to save outputs
