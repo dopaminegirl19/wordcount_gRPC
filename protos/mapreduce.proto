@@ -13,7 +13,7 @@ service MapReduce {
   // A simple RPC.
   //
   // Extracts files from given Path, does word count, and signals the finish. 
-  rpc Reduce (Path) returns (isFinished) {}
+  rpc Reduce (ReduceRequest) returns (isFinished) {}
 
 }
 
@@ -23,9 +23,9 @@ message MapRequest {
   int32 M = 3;              // number of buckets  
 }
 
-// A Path provides the path to a folder containing files to be parsed
-message Path {
-  string path = 1;
+message ReduceRequest {
+  string input_path = 1;    // path to input files (e.g. output of map task)
+  string output_path = 2;   // path to save outputs
 }
 
 // A signal that the task is finished. Note that the actual text is not transferred over the gRPC. 

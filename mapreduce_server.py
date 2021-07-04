@@ -114,8 +114,6 @@ class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
     """Provides methods that implement functionality of map reduce server."""
 
     def __init__(self):
-        self.M = 4                                                  # number of buckets 
-        self.intermediate_output_dir = "outputs/intermediate"           # output dir for intermediate outputs (after mapping)
         self.final_output_dir = "outputs/out"                           # output dir for final outputs (after reduce)
 
     def Map(self, request, context):
@@ -138,15 +136,14 @@ class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
     def Reduce(self, request, context):
         
         # Prepare output dir:
-        make_output_dirs(self.final_output_dir)
+        make_output_dirs(request.ouput_path)
         
         # Loop through buckets and get corresponding intermediate files 
         for m in range(self.M):
-            bucket_files = get_bucket_files(request.path, m)
+            bucket_files = get_bucket_files(request.input_path, m)
             
             # Reduce to one file and save in output directory 
-            fname_out = reduce_files(bucket_files, m, self.final_output_dir)
-        
+            fname_out = reduce_files(bucket_files, m, request.output_path)
         
         # Flag finished: 
         return mapreduce_pb2.isFinished(isfinished = True)
