@@ -65,8 +65,20 @@ The map task returns a ```stream``` of output file names, which are displayed to
  1. ```output_path``` (string), relative path to folder containing output files
  
  The reduce task is carried out by the server. The server takes the input files from ```ReduceRequest.input_path```, pools words from buckets with the same id, and counts the occurence of each word. Thus, a total of M files are produced (M is attributed to the server during the map task), and each have one word on each line, followed by its frequency across all the original .txt files.<br>
- These final output files are saved in the specified```ReduceRequest.output_path```.<br>
+ These final output files are saved in the specified ```ReduceRequest.output_path```.<br>
  
  As in the map task, the reduce task returns a ```stream``` of output file names, which are displayed to the user as they are saved. 
+ 
+ ### Stopping ###
+ After the map and reduce tasks are complete, the client sends a ```StopRequest``` to the server. This is handled by a ```threading.Event``` attributed to the server, which sets a ```stop_event``` upon receiving the StopRequest from the client. <br>
+ This feature ensures that the server exits when there are no more tasks to be carried out. At this point, the client also exits. 
+ 
+ ## Future directions ##
+ 
+ ### Stream input to map task ###
+ Currently, the client sends a single input path to the server. For additional flexibility, a new bidirectional streaming RPC would allow the user to specify by filename which .txt files to send to the system for word count.
+ 
+ ### Load balancing ###
+ If intended for heavy use, the system may benefit from a load balancing proxy, which would distributed computing demands across multiple servers. 
  
  
