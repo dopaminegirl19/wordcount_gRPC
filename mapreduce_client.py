@@ -26,13 +26,14 @@ def run():
         M=M
         ))
     
+    # Reduce:
     print("=== Map complete. Output files at: {}. Now starting reduce.".format(str(response.path)))
     response = stub.Reduce(mapreduce_pb2.ReduceRequest(
         input_path = f2intermediate, 
         output_path =f2outputs
         ))
     
-    # terminate process.
+    # Terminate:
     print("=== Reduce complete. Final output files at: {}.".format(str(response.path)))
     print("=== Task complete. Servers and client will now exit.")
     response = stub.Stop(mapreduce_pb2.StopRequest(shouldstop = True))
