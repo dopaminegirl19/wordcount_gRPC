@@ -8,27 +8,40 @@ service MapReduce {
   // A simple RPC.
   //
   // Extracts files from given Path, sorts into buckets, and signals the finish. 
-  rpc Map (Path) returns (OutputPath) {}
+  rpc Map (MapRequest) returns (OutputPath) {}
 
   // A simple RPC.
   //
   // Extracts files from given Path, does word count, and signals the finish. 
-  rpc Reduce (Path) returns (isFinished) {}
+  rpc Reduce (ReduceRequest) returns (OutputPath) {}
 
+  // Shutdown RPC.
+  //
+  rpc Stop (StopRequest) returns (ShutDownResponse) {}
 }
 
-// A Path provides the path to a folder containing files to be parsed
-message Path {
-  string path = 1;
+message MapRequest {
+  string input_path = 1;    // path to input files 
+  string output_path = 2;   // path to save outputs 
+  int32 M = 3;              // number of buckets  
 }
 
-// A signal that the task is finished. Note that the actual text is not transferred over the gRPC. 
-message isFinished {
-  bool isfinished = 1;
+message ReduceRequest {
+  string input_path = 1;    // path to input files (e.g. output of map task)
+  string output_path = 2;   // path to save outputs
 }
 
 message OutputPath {
   string path = 1;
 }
 
+message StopRequest {
+  bool shouldstop = 1;
+}
+
+message ShutDownResponse {
+  bool isshutdown = 1;
+}
+
 // Command line to generate pb2 and pb2_grpc files: 
+// python -m grpc_tools.protoc --proto_path protos --python_out=. --grpc_python_out=. protos/mapreduce.proto
