@@ -22,7 +22,7 @@ class MapReduceStub(object):
         self.Reduce = channel.unary_unary(
                 '/mapreduce.MapReduce/Reduce',
                 request_serializer=mapreduce__pb2.ReduceRequest.SerializeToString,
-                response_deserializer=mapreduce__pb2.isFinished.FromString,
+                response_deserializer=mapreduce__pb2.OutputPath.FromString,
                 )
         self.Stop = channel.unary_unary(
                 '/mapreduce.MapReduce/Stop',
@@ -71,7 +71,7 @@ def add_MapReduceServicer_to_server(servicer, server):
             'Reduce': grpc.unary_unary_rpc_method_handler(
                     servicer.Reduce,
                     request_deserializer=mapreduce__pb2.ReduceRequest.FromString,
-                    response_serializer=mapreduce__pb2.isFinished.SerializeToString,
+                    response_serializer=mapreduce__pb2.OutputPath.SerializeToString,
             ),
             'Stop': grpc.unary_unary_rpc_method_handler(
                     servicer.Stop,
@@ -118,7 +118,7 @@ class MapReduce(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/mapreduce.MapReduce/Reduce',
             mapreduce__pb2.ReduceRequest.SerializeToString,
-            mapreduce__pb2.isFinished.FromString,
+            mapreduce__pb2.OutputPath.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
 

@@ -19,26 +19,24 @@ def run():
     stub = mapreduce_pb2_grpc.MapReduceStub(channel)
     
     # Map:
-    print("Starting map.")
+    print("=== Starting map.")
     response = stub.Map(mapreduce_pb2.MapRequest(
         input_path = f2inputs, 
         output_path = f2intermediate, 
         M=M
         ))
-    print("Map complete. Output files at: " + str(response))
     
-    # Reduce: 
-    print("Starting reduce.")
-    fin = stub.Reduce(mapreduce_pb2.ReduceRequest(input_path = response.path, output_path =f2outputs))
-    if fin: #fin.isfinished:
-        print("Reduce complete. Final output files at: ".format(f2outputs))
-        
-        # Close server:
-        print("Task complete. Closing servers.")
-        response = stub.Stop(mapreduce_pb2.StopRequest(shouldstop = True))
-        if response.isshutdown:
-            print("Servers closed, client will now exit.")
-            sys.exit(0)
+    print("=== Map complete. Output files at: {}. Now starting reduce.".format(str(response.path)))
+    response = stub.Reduce(mapreduce_pb2.ReduceRequest(
+        input_path = f2intermediate, 
+        output_path =f2outputs
+        ))
+    
+    # terminate process.
+    print("=== Reduce complete. Final output files at: {}.".format(str(response.path)))
+    print("=== Task complete. Servers and client will now exit.")
+    response = stub.Stop(mapreduce_pb2.StopRequest(shouldstop = True))
+    sys.exit(0)
         
 
 if __name__ == '__main__':

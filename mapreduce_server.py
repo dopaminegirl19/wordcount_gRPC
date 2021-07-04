@@ -153,7 +153,7 @@ class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
             fname_out = reduce_files(bucket_files, m, request.output_path)
         
         # Flag finished: 
-        return mapreduce_pb2.isFinished(isfinished = True)
+        return mapreduce_pb2.OutputPath(path = request.output_path)
         
     
 def serve():

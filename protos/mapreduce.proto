@@ -13,7 +13,7 @@ service MapReduce {
   // A simple RPC.
   //
   // Extracts files from given Path, does word count, and signals the finish. 
-  rpc Reduce (ReduceRequest) returns (isFinished) {}
+  rpc Reduce (ReduceRequest) returns (OutputPath) {}
 
   // Shutdown RPC.
   //
@@ -29,11 +29,6 @@ message MapRequest {
 message ReduceRequest {
   string input_path = 1;    // path to input files (e.g. output of map task)
   string output_path = 2;   // path to save outputs
-}
-
-// A signal that the task is finished. Note that the actual text is not transferred over the gRPC. 
-message isFinished {
-  bool isfinished = 1;
 }
 
 message OutputPath {
