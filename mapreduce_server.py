@@ -90,7 +90,7 @@ def reduce_files(fnames_list, m, output_dir):
         words_all_buckets += words
         
     # 2) Count occurences of unique words:
-    words_set = set(words_all_buckets)                                      
+    words_set = sorted(set(words_all_buckets))
     word_count = []
     
     for word in words_set:
