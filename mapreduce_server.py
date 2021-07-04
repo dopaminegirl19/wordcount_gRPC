@@ -1,5 +1,4 @@
 import futures3
-import threading
 import logging
 import re
 import os
@@ -113,14 +112,13 @@ def reduce_files(fnames_list, m, output_dir):
 class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
     """Provides methods that implement functionality of map reduce server."""
 
-    def __init__(self):
-        self.final_output_dir = "outputs/out"                           # output dir for final outputs (after reduce)
-        self.M = 4
-        
+    #def __init__(self):
+
     def Map(self, request, context):
         
+        self.M = request.M
+        
         # Prepare output dir: 
-        # make_output_dirs(self.intermediate_output_dir)
         make_output_dirs(request.output_path)
         
         # Get txt files:
@@ -128,7 +126,6 @@ class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
 
         # Loop through files and perform mapping function:
         for c, file in enumerate(txt_files):
-            #output_fname_list = map_one_file(file, c, self.M, self.intermediate_output_dir)
             output_fname_list = map_one_file(file, c, request.M, request.output_path)
         
         # Flag finished: 
@@ -137,7 +134,6 @@ class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
     def Reduce(self, request, context):
         
         # Prepare output dir:
-        # make_output_dirs(self.final_output_dir)
         make_output_dirs(request.output_path)
         
         # Loop through buckets and get corresponding intermediate files 
@@ -145,11 +141,18 @@ class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
             bucket_files = get_bucket_files(request.input_path, m)
             
             # Reduce to one file and save in output directory 
-            #fname_out = reduce_files(bucket_files, m, self.final_output_dir)
             fname_out = reduce_files(bucket_files, m, request.output_path)
         
         # Flag finished: 
         return mapreduce_pb2.isFinished(isfinished = True)
+    
+    def Stop(self, request, context):
+        # Stop server
+        if request.shouldstop:
+            return server.stop(grace = None)
+        else:
+            pass
+        
     
 def serve():
     server = grpc.server(futures3.ThreadPoolExecutor(max_workers=10))

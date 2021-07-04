@@ -24,6 +24,11 @@ class MapReduceStub(object):
                 request_serializer=mapreduce__pb2.ReduceRequest.SerializeToString,
                 response_deserializer=mapreduce__pb2.isFinished.FromString,
                 )
+        self.Stop = channel.unary_unary(
+                '/mapreduce.MapReduce/Stop',
+                request_serializer=mapreduce__pb2.StopRequest.SerializeToString,
+                response_deserializer=mapreduce__pb2.isFinished.FromString,
+                )
 
 
 class MapReduceServicer(object):
@@ -47,6 +52,15 @@ class MapReduceServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def Stop(self, request, context):
+        """A simple RPC.
+
+        Closes the server.
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_MapReduceServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -58,6 +72,11 @@ def add_MapReduceServicer_to_server(servicer, server):
             'Reduce': grpc.unary_unary_rpc_method_handler(
                     servicer.Reduce,
                     request_deserializer=mapreduce__pb2.ReduceRequest.FromString,
+                    response_serializer=mapreduce__pb2.isFinished.SerializeToString,
+            ),
+            'Stop': grpc.unary_unary_rpc_method_handler(
+                    servicer.Stop,
+                    request_deserializer=mapreduce__pb2.StopRequest.FromString,
                     response_serializer=mapreduce__pb2.isFinished.SerializeToString,
             ),
     }
@@ -100,6 +119,23 @@ class MapReduce(object):
             metadata=None):
         return grpc.experimental.unary_unary(request, target, '/mapreduce.MapReduce/Reduce',
             mapreduce__pb2.ReduceRequest.SerializeToString,
+            mapreduce__pb2.isFinished.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def Stop(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/mapreduce.MapReduce/Stop',
+            mapreduce__pb2.StopRequest.SerializeToString,
             mapreduce__pb2.isFinished.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)

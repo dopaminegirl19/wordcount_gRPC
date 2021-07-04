@@ -28,10 +28,14 @@ def run():
     
     # Reduce: 
     print("Starting reduce.")
-    fin = stub.Reduce(mapreduce_pb2.ReduceRequest(input_path = f2intermediate, output_path = f2outputs))
-    if fin.isfinished:
+    fin = stub.Reduce(mapreduce_pb2.ReduceRequest(input_path = f2intermediate, output_path =f2outputs))
+    if fin: #fin.isfinished:
         print("Reduce complete. Final output files at: ".format(f2outputs))
-        print("Task complete.")
+        
+        # Close server:
+        print("Task complete. Closing servers.")
+        server_closed = stub.Stop(mapreduce_pb2.StopRequest(shouldstop = 1))
+        print("Client will close now.")
         
 
 if __name__ == '__main__':

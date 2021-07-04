@@ -15,6 +15,11 @@ service MapReduce {
   // Extracts files from given Path, does word count, and signals the finish. 
   rpc Reduce (ReduceRequest) returns (isFinished) {}
 
+  // A simple RPC.
+  //
+  // Closes the server.
+  rpc Stop (StopRequest) returns (isFinished) {}
+
 }
 
 message MapRequest {
@@ -37,12 +42,9 @@ message OutputPath {
   string path = 1;
 }
 
+message StopRequest {
+  bool shouldstop = 1;
+}
+
 // Command line to generate pb2 and pb2_grpc files: 
 // python -m grpc_tools.protoc --proto_path protos --python_out=. --grpc_python_out=. protos/mapreduce.proto
-
-// To do:
-// push to branch 
-// do final test
-// merge branches 
-
-// Then do stream response 
