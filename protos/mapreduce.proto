@@ -7,15 +7,15 @@ service MapReduce {
     
   // A simple RPC.
   //
-  // Extracts files from given Path, sorts into buckets, and signals the finish. 
-  rpc Map (MapRequest) returns (OutputPath) {}
+  // Extracts files from given Path, sorts into buckets, and returns the output file names as they are saved.
+  rpc Map (MapRequest) returns (stream OutputPath) {}
 
   // A simple RPC.
   //
-  // Extracts files from given Path, does word count, and signals the finish. 
-  rpc Reduce (ReduceRequest) returns (OutputPath) {}
+  // Extracts files from given Path, does word count, and returns the output file names as they are saved. 
+  rpc Reduce (ReduceRequest) returns (stream OutputPath) {}
 
-  // Shutdown RPC.
+  // Server shutdown RPC.
   //
   rpc Stop (StopRequest) returns (ShutDownResponse) {}
 }
@@ -32,15 +32,15 @@ message ReduceRequest {
 }
 
 message OutputPath {
-  string path = 1;
+  string path = 1;          // path to output file
 }
 
 message StopRequest {
-  bool shouldstop = 1;
+  bool shouldstop = 1;      // indicator that task is finished and server should close 
 }
 
 message ShutDownResponse {
-  bool isshutdown = 1;
+  bool isshutdown = 1;      // indicator that server has closed
 }
 
 // Command line to generate pb2 and pb2_grpc files: 
