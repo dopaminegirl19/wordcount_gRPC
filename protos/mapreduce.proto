@@ -8,13 +8,19 @@ service MapReduce {
   // A simple RPC.
   //
   // Extracts files from given Path, sorts into buckets, and signals the finish. 
-  rpc Map (Path) returns (OutputPath) {}
+  rpc Map (MapRequest) returns (OutputPath) {}
 
   // A simple RPC.
   //
   // Extracts files from given Path, does word count, and signals the finish. 
   rpc Reduce (Path) returns (isFinished) {}
 
+}
+
+message MapRequest {
+  string input_path = 1;    // path to input files 
+  string output_path = 2;   // path to save outputs 
+  int32 M = 3;              // number of buckets  
 }
 
 // A Path provides the path to a folder containing files to be parsed
@@ -32,3 +38,4 @@ message OutputPath {
 }
 
 // Command line to generate pb2 and pb2_grpc files: 
+// python -m grpc_tools.protoc --proto_path protos --python_out=. --grpc_python_out=. protos/mapreduce.proto

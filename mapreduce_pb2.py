@@ -19,10 +19,56 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0fmapreduce.proto\x12\tmapreduce\"\x14\n\x04Path\x12\x0c\n\x04path\x18\x01 \x01(\t\" \n\nisFinished\x12\x12\n\nisfinished\x18\x01 \x01(\x08\"\x1a\n\nOutputPath\x12\x0c\n\x04path\x18\x01 \x01(\t2p\n\tMapReduce\x12/\n\x03Map\x12\x0f.mapreduce.Path\x1a\x15.mapreduce.OutputPath\"\x00\x12\x32\n\x06Reduce\x12\x0f.mapreduce.Path\x1a\x15.mapreduce.isFinished\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x0fmapreduce.proto\x12\tmapreduce\"@\n\nMapRequest\x12\x12\n\ninput_path\x18\x01 \x01(\t\x12\x13\n\x0boutput_path\x18\x02 \x01(\t\x12\t\n\x01M\x18\x03 \x01(\x05\"\x14\n\x04Path\x12\x0c\n\x04path\x18\x01 \x01(\t\" \n\nisFinished\x12\x12\n\nisfinished\x18\x01 \x01(\x08\"\x1a\n\nOutputPath\x12\x0c\n\x04path\x18\x01 \x01(\t2v\n\tMapReduce\x12\x35\n\x03Map\x12\x15.mapreduce.MapRequest\x1a\x15.mapreduce.OutputPath\"\x00\x12\x32\n\x06Reduce\x12\x0f.mapreduce.Path\x1a\x15.mapreduce.isFinished\"\x00\x62\x06proto3'
 )
 
 
+
+
+_MAPREQUEST = _descriptor.Descriptor(
+  name='MapRequest',
+  full_name='mapreduce.MapRequest',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='input_path', full_name='mapreduce.MapRequest.input_path', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='output_path', full_name='mapreduce.MapRequest.output_path', index=1,
+      number=2, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+    _descriptor.FieldDescriptor(
+      name='M', full_name='mapreduce.MapRequest.M', index=2,
+      number=3, type=5, cpp_type=1, label=1,
+      has_default_value=False, default_value=0,
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=30,
+  serialized_end=94,
+)
 
 
 _PATH = _descriptor.Descriptor(
@@ -52,8 +98,8 @@ _PATH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=30,
-  serialized_end=50,
+  serialized_start=96,
+  serialized_end=116,
 )
 
 
@@ -84,8 +130,8 @@ _ISFINISHED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=52,
-  serialized_end=84,
+  serialized_start=118,
+  serialized_end=150,
 )
 
 
@@ -116,14 +162,22 @@ _OUTPUTPATH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=86,
-  serialized_end=112,
+  serialized_start=152,
+  serialized_end=178,
 )
 
+DESCRIPTOR.message_types_by_name['MapRequest'] = _MAPREQUEST
 DESCRIPTOR.message_types_by_name['Path'] = _PATH
 DESCRIPTOR.message_types_by_name['isFinished'] = _ISFINISHED
 DESCRIPTOR.message_types_by_name['OutputPath'] = _OUTPUTPATH
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
+
+MapRequest = _reflection.GeneratedProtocolMessageType('MapRequest', (_message.Message,), {
+  'DESCRIPTOR' : _MAPREQUEST,
+  '__module__' : 'mapreduce_pb2'
+  # @@protoc_insertion_point(class_scope:mapreduce.MapRequest)
+  })
+_sym_db.RegisterMessage(MapRequest)
 
 Path = _reflection.GeneratedProtocolMessageType('Path', (_message.Message,), {
   'DESCRIPTOR' : _PATH,
@@ -155,15 +209,15 @@ _MAPREDUCE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=114,
-  serialized_end=226,
+  serialized_start=180,
+  serialized_end=298,
   methods=[
   _descriptor.MethodDescriptor(
     name='Map',
     full_name='mapreduce.MapReduce.Map',
     index=0,
     containing_service=None,
-    input_type=_PATH,
+    input_type=_MAPREQUEST,
     output_type=_OUTPUTPATH,
     serialized_options=None,
     create_key=_descriptor._internal_create_key,
