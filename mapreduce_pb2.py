@@ -19,7 +19,7 @@ DESCRIPTOR = _descriptor.FileDescriptor(
   syntax='proto3',
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_pb=b'\n\x0fmapreduce.proto\x12\tmapreduce\"@\n\nMapRequest\x12\x12\n\ninput_path\x18\x01 \x01(\t\x12\x13\n\x0boutput_path\x18\x02 \x01(\t\x12\t\n\x01M\x18\x03 \x01(\x05\"8\n\rReduceRequest\x12\x12\n\ninput_path\x18\x01 \x01(\t\x12\x13\n\x0boutput_path\x18\x02 \x01(\t\" \n\nisFinished\x12\x12\n\nisfinished\x18\x01 \x01(\x08\"\x1a\n\nOutputPath\x12\x0c\n\x04path\x18\x01 \x01(\t2\x7f\n\tMapReduce\x12\x35\n\x03Map\x12\x15.mapreduce.MapRequest\x1a\x15.mapreduce.OutputPath\"\x00\x12;\n\x06Reduce\x12\x18.mapreduce.ReduceRequest\x1a\x15.mapreduce.isFinished\"\x00\x62\x06proto3'
+  serialized_pb=b'\n\x0fmapreduce.proto\x12\tmapreduce\"@\n\nMapRequest\x12\x12\n\ninput_path\x18\x01 \x01(\t\x12\x13\n\x0boutput_path\x18\x02 \x01(\t\x12\t\n\x01M\x18\x03 \x01(\x05\"\x1a\n\x04Path\x12\x12\n\ninput_path\x18\x01 \x01(\t\"8\n\rReduceRequest\x12\x12\n\ninput_path\x18\x01 \x01(\t\x12\x13\n\x0boutput_path\x18\x02 \x01(\t\" \n\nisFinished\x12\x12\n\nisfinished\x18\x01 \x01(\x08\"\x1a\n\nOutputPath\x12\x0c\n\x04path\x18\x01 \x01(\t2\x7f\n\tMapReduce\x12\x35\n\x03Map\x12\x15.mapreduce.MapRequest\x1a\x15.mapreduce.OutputPath\"\x00\x12;\n\x06Reduce\x12\x18.mapreduce.ReduceRequest\x1a\x15.mapreduce.isFinished\"\x00\x62\x06proto3'
 )
 
 
@@ -71,6 +71,38 @@ _MAPREQUEST = _descriptor.Descriptor(
 )
 
 
+_PATH = _descriptor.Descriptor(
+  name='Path',
+  full_name='mapreduce.Path',
+  filename=None,
+  file=DESCRIPTOR,
+  containing_type=None,
+  create_key=_descriptor._internal_create_key,
+  fields=[
+    _descriptor.FieldDescriptor(
+      name='input_path', full_name='mapreduce.Path.input_path', index=0,
+      number=1, type=9, cpp_type=9, label=1,
+      has_default_value=False, default_value=b"".decode('utf-8'),
+      message_type=None, enum_type=None, containing_type=None,
+      is_extension=False, extension_scope=None,
+      serialized_options=None, file=DESCRIPTOR,  create_key=_descriptor._internal_create_key),
+  ],
+  extensions=[
+  ],
+  nested_types=[],
+  enum_types=[
+  ],
+  serialized_options=None,
+  is_extendable=False,
+  syntax='proto3',
+  extension_ranges=[],
+  oneofs=[
+  ],
+  serialized_start=96,
+  serialized_end=122,
+)
+
+
 _REDUCEREQUEST = _descriptor.Descriptor(
   name='ReduceRequest',
   full_name='mapreduce.ReduceRequest',
@@ -105,8 +137,8 @@ _REDUCEREQUEST = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=96,
-  serialized_end=152,
+  serialized_start=124,
+  serialized_end=180,
 )
 
 
@@ -137,8 +169,8 @@ _ISFINISHED = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=154,
-  serialized_end=186,
+  serialized_start=182,
+  serialized_end=214,
 )
 
 
@@ -169,11 +201,12 @@ _OUTPUTPATH = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=188,
-  serialized_end=214,
+  serialized_start=216,
+  serialized_end=242,
 )
 
 DESCRIPTOR.message_types_by_name['MapRequest'] = _MAPREQUEST
+DESCRIPTOR.message_types_by_name['Path'] = _PATH
 DESCRIPTOR.message_types_by_name['ReduceRequest'] = _REDUCEREQUEST
 DESCRIPTOR.message_types_by_name['isFinished'] = _ISFINISHED
 DESCRIPTOR.message_types_by_name['OutputPath'] = _OUTPUTPATH
@@ -185,6 +218,13 @@ MapRequest = _reflection.GeneratedProtocolMessageType('MapRequest', (_message.Me
   # @@protoc_insertion_point(class_scope:mapreduce.MapRequest)
   })
 _sym_db.RegisterMessage(MapRequest)
+
+Path = _reflection.GeneratedProtocolMessageType('Path', (_message.Message,), {
+  'DESCRIPTOR' : _PATH,
+  '__module__' : 'mapreduce_pb2'
+  # @@protoc_insertion_point(class_scope:mapreduce.Path)
+  })
+_sym_db.RegisterMessage(Path)
 
 ReduceRequest = _reflection.GeneratedProtocolMessageType('ReduceRequest', (_message.Message,), {
   'DESCRIPTOR' : _REDUCEREQUEST,
@@ -216,8 +256,8 @@ _MAPREDUCE = _descriptor.ServiceDescriptor(
   index=0,
   serialized_options=None,
   create_key=_descriptor._internal_create_key,
-  serialized_start=216,
-  serialized_end=343,
+  serialized_start=244,
+  serialized_end=371,
   methods=[
   _descriptor.MethodDescriptor(
     name='Map',
