@@ -121,14 +121,16 @@ class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
     def Map(self, request, context):
         
         # Prepare output dir: 
-        make_output_dirs(self.intermediate_output_dir)
+        # make_output_dirs(self.intermediate_output_dir)
+        make_output_dirs(request.output_path)
         
         # Get txt files:
-        txt_files = get_txt_files(request.path)
+        txt_files = get_txt_files(request.input_path)
 
         # Loop through files and perform mapping function:
         for c, file in enumerate(txt_files):
-            output_fname_list = map_one_file(file, c, self.M, self.intermediate_output_dir)
+            #output_fname_list = map_one_file(file, c, self.M, self.intermediate_output_dir)
+            output_fname_list = map_one_file(file, c, request.M, request.output_path)
         
         # Flag finished: 
         return mapreduce_pb2.OutputPath(path="outputs/intermediate")
