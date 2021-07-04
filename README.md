@@ -1,7 +1,7 @@
 # A gRPC for word count #
 
 ## What does it do? ##
-This code takes the path to a folder containing a number of .txt files containing words, and performs a word count on the pooled words. <br>
+This code takes the path to a folder containing a number N of .txt files containing words, and performs a word count on the pooled words. <br>
 The resulting directory looks like this:
 
 ```
