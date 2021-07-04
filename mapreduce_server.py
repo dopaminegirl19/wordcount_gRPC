@@ -33,38 +33,38 @@ def map_one_file(path, n, M, output_path):
     """
     
     # 0) Initialize buckets and clean words
-    buckets = [[] for i in range(M)]                                    # initialize list of lists for buckets
+    buckets = [[] for i in range(M)]                                    
     
-    f = open(path, 'rt')                                                # open file
-    text = f.read()                                                     # get text
-    words = text.split()                                                # split to get words 
+    f = open(path, 'rt')                                                
+    text = f.read()  
+    f.close()
+    words = text.split()                                                
     
     # 1) Sort words into buckets
-    for word in words:                                                  # now loop through words
+    for word in words:                                                  
         word = re.sub(r'[^\w\s]', '', word)                             # remove punctuation 
 
         if len(word) > 0:
             letter = word[0]                                            # sort by first letter, also remove non-word strings
 
-            if ord(letter) > 96 and ord(letter) < 123:                  # remove non-word srtings
-                buckets[ ord(letter)% M ].append(word.lower())          # add to bucket and standardize 
+            if ord(letter) > 96 and ord(letter) < 123:                  
+                buckets[ ord(letter)% M ].append(word.lower())
             else:
-                pass                                                    # pass if not a word 
+                pass 
     
     # 2) Put bucketed words into txt files, save these files in output dir
-    
     output_fname_list = []
     
-    for m, bucket in enumerate(buckets):                                # buckets filled; now save them in txt files in the intermediate folder 
+    for m, bucket in enumerate(buckets):
 
-        output_text = "\n".join(bucket)                                 # arrange words in a list
+        output_text = "\n".join(bucket)
         fname_out = os.path.join(output_path, "mr-{}-{}".format(n, m))  # name of file is mr-<map task id>-<reduce task id>
 
         with open(fname_out, "w") as output:                            # write the txt file and save in the output dir
             output.write(output_text)
         output.close()
 
-        output_fname_list.append(fname_out)                             # keep a list of the output txt files to return to the client 
+        output_fname_list.append(fname_out)
 
     return '\n'.join(output_fname_list)
 
@@ -79,24 +79,28 @@ def reduce_files(fnames_list, m, output_dir):
     ================================
     """
 
+    # 1) Aggregate words from same bucket id:
     words_all_buckets = []
 
     for fname in fnames_list:
-        f = open(fname, 'rt')                                               # open file
-        text = f.read()                                                     # get text
-        words = text.split()                                                # split to get words
-        words_all_buckets += words                                          # aggregate words from multiple buckets 
+        f = open(fname, 'rt')
+        text = f.read()
+        f.close()
+        words = text.split()
+        words_all_buckets += words
         
-    words_set = set(words_all_buckets)                                      # unique words
+    # 2) Count occurences of unique words:
+    words_set = set(words_all_buckets)                                      
     word_count = []
     
     for word in words_set:
-        count = words_all_buckets.count(word)                               # count word occurences and format 
+        count = words_all_buckets.count(word)
         result = str(word) + " " + str(count)
         word_count.append(result)
     
     word_count_out = "\n".join(word_count)                                  # make a text-friendly string 
     
+    # 3) Save output
     fname_out = os.path.join(output_dir, "out-{}".format(m))
     with open(fname_out, "w") as output:
         output.write(word_count_out)
