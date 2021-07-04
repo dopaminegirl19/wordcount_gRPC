@@ -23,10 +23,6 @@ message MapRequest {
   int32 M = 3;              // number of buckets  
 }
 
-message Path {
-  string input_path = 1;          // path to input files 
-}
-
 message ReduceRequest {
   string input_path = 1;    // path to input files (e.g. output of map task)
   string output_path = 2;   // path to save outputs
@@ -43,3 +39,10 @@ message OutputPath {
 
 // Command line to generate pb2 and pb2_grpc files: 
 // python -m grpc_tools.protoc --proto_path protos --python_out=. --grpc_python_out=. protos/mapreduce.proto
+
+// To do:
+// push to branch 
+// do final test
+// merge branches 
+
+// Then do stream response 
