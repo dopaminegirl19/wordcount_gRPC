@@ -54,8 +54,8 @@ See **Map Task** and **Reduce Task** sections for details.
  1. ```output_path``` (string), relative path to folder containing intermediate output files
  1. ```M``` (int32), number of buckets <br>
 
- The map task is carried out by the server. The server takes the input files, separates text into single words, and puts each word into a "bucket" (intermediate file). The bucket is decided by (first letter of the word) % M. Thus, a total of M * number of .txt files are produced, and each have one word on each line.<br>
- These intermediate files are saved in the specified output_path.<br>
+ The map task is carried out by the server. The server takes the input files from ```MapRequest.input_path```, separates text into single words, and puts each word into a "bucket" (intermediate file). The bucket is decided by (first letter of the word) % ```MapRequest.M```. Thus, a total of ```M``` * number of .txt files are produced, and each have one word on each line.<br>
+ These intermediate files are saved in the specified ```Maprequest.output_path```.<br>
  
 The map task returns a ```stream``` of output file names, which are displayed to the user as they are saved. This is because in theory there could be a great many input .txt files to parse, so this way the user can follow the progress of the server. 
  
@@ -64,8 +64,8 @@ The map task returns a ```stream``` of output file names, which are displayed to
  1. ```input_path``` (string), relative path to folder containing intermediate files to parse
  1. ```output_path``` (string), relative path to folder containing output files
  
- The reduce task is carried out by the server. The server takes the input files, pools words from buckets with the same id, and counts the occurence of each word. Thus, a total of M files are produced, and each have one word on each line, followed by its frequency across all the original .txt files.<br>
- These final output files are saved in the specified output_path.<br>
+ The reduce task is carried out by the server. The server takes the input files from ```ReduceRequest.input_path```, pools words from buckets with the same id, and counts the occurence of each word. Thus, a total of M files are produced (M is attributed to the server during the map task), and each have one word on each line, followed by its frequency across all the original .txt files.<br>
+ These final output files are saved in the specified```ReduceRequest.output_path```.<br>
  
  As in the map task, the reduce task returns a ```stream``` of output file names, which are displayed to the user as they are saved. 
  
