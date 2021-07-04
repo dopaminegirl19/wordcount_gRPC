@@ -13,7 +13,7 @@ service MapReduce {
   // A simple RPC.
   //
   // Extracts files from given Path, does word count, and signals the finish. 
-  rpc Reduce (ReduceRequest) returns (OutputPath) {}
+  rpc Reduce (ReduceRequest) returns (stream OutputPath) {}
 
   // Shutdown RPC.
   //
