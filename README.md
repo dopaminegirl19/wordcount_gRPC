@@ -21,7 +21,7 @@ outputs
 │   │   out-2
 │   │   out-3
 ```
-Where the intermediate file names are mr-<map task id>-<reduce task id> and the file output names are out-<reduce task id>. <br>
+Where the intermediate file names are ```mr-<map task id>-<reduce task id>``` and the file output names are ```out-<reduce task id>```. <br>
 Each map task id corresponds to an original .txt file, and each reduce task id corresponds to a bucket (M buckets as instructed by the user).<br>
 See **Map Task** and **Reduce Task** sections for details.
  
