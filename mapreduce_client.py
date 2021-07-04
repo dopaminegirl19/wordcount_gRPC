@@ -7,9 +7,9 @@ import mapreduce_pb2
 import mapreduce_pb2_grpc
 
 ## === USER INPUT ====
-f2inputs = 'inputs'
-f2intermediate = 'outputs/intermediate'
-f2outputs = 'outputs/out'
+p2inputs = 'inputs'
+p2intermediate = 'outputs/intermediate'
+p2outputs = 'outputs/out'
 M = 4
 ## ===================
   
@@ -22,8 +22,8 @@ def run():
     print("=== Starting map.")
     print("=== Map files:")
     responses = stub.Map(mapreduce_pb2.MapRequest(
-        input_path = f2inputs, 
-        output_path = f2intermediate, 
+        input_path = p2inputs, 
+        output_path = p2intermediate, 
         M=M
         ))
     for response in responses:
@@ -33,8 +33,8 @@ def run():
     print("=== Map complete. Starting reduce. ")
     print("=== Reduce files:")
     responses = stub.Reduce(mapreduce_pb2.ReduceRequest(
-        input_path = f2intermediate, 
-        output_path =f2outputs
+        input_path = p2intermediate, 
+        output_path =p2outputs
         ))
     for response in responses:
         print(response.path)
