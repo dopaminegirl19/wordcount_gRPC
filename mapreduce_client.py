@@ -40,7 +40,7 @@ def run():
         print(response.path)
     
     # Terminate:
-    print("=== Reduce complete. Final output files at: {}.".format(f2outputs))
+    print("=== Reduce complete. Final output files at: {}.".format(p2outputs))
     print("=== Task complete. Servers and client will now exit.")
     response = stub.Stop(mapreduce_pb2.StopRequest(shouldstop = True))
     sys.exit(0)
