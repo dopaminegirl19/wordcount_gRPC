@@ -149,11 +149,9 @@ class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
         for m in range(self.M):
             bucket_files = get_bucket_files(request.input_path, m)
             
-            # Reduce to one file and save in output directory 
+            # Reduce to one file and save in output directory, then report to client
             fname_out = reduce_files(bucket_files, m, request.output_path)
-        
-        # Flag finished: 
-        return mapreduce_pb2.OutputPath(path = request.output_path)
+            yield mapreduce_pb2.OutputPath(path = fname_out)
         
     
 def serve():
