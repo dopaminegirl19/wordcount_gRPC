@@ -91,7 +91,7 @@ def reduce_files(fnames_list, m, output_dir):
     word_count = []
     
     for word in words_set:
-        count = words_all_buckets.count(word)                                           # count word occurences and format 
+        count = words_all_buckets.count(word)                               # count word occurences and format 
         result = str(word) + " " + str(count)
         word_count.append(result)
     
@@ -149,15 +149,14 @@ class MapReduceServicer(mapreduce_pb2_grpc.MapReduceServicer):
         
     
 def serve():
-    stop_event = threading.Event() # *
+    stop_event = threading.Event() 
     server = grpc.server(futures3.ThreadPoolExecutor(max_workers=10))
     mapreduce_pb2_grpc.add_MapReduceServicer_to_server(
         MapReduceServicer(stop_event), server)
     server.add_insecure_port('[::]:50051')
     server.start()
-    # server.wait_for_termination()
-    stop_event.wait() # *
-    server.stop(grace = None) # *
+    stop_event.wait() 
+    server.stop(grace = None) 
 
 
 if __name__ == '__main__':
