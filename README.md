@@ -53,10 +53,11 @@ See **Map Task** and **Reduce Task** sections for details.
  -  ```protos/mapreduce.proto``` specifies the data types and structure in the messages conveyed between the client and the server.
  -  ```mapreduce_pb2.py``` and  ```mapreduce_pb2_grpc.py``` are automatically generated scripts which enable interfacing between the client and server, based on the protocol buffer.
  -  ```mapreduce_server.py``` receives the requests from the client, and carries out the processes.
- -  ```mapreduce_client.py``` receives the user input and formulates the request to send to the server. The user inputs are:
-   -  ```p2_inputs``` (string) is the relative path to the .txt files to be parsed 
-   - ```p2_intermediate``` (string) is the relative path to the folder in which the server should store the intermediate output files.
-   - ```p2_final``` (string) is the relative path to the folder in which the server should store the final output files. 
+ -  ```mapreduce_client.py``` receives the user input and formulates the request to send to the server. The user inputs are retrieved from the command line, or defaults are used:
+   -  ```'--p2inputs', default='inputs'``` is the relative path to the .txt files to be parsed 
+   - ```'--p2intermediate', default='outputs/intermediate'``` is the relative path to the folder in which the server should store the intermediate output files.
+   - ```'--p2outputs', default='outputs/out'``` is the relative path to the folder in which the server should store the final output files.
+   - ```'--M', default=4``` is the number of buckets desired.
  - In ```example_outputs``` you can see what the output is if you run the code as is. 
  
  ### Map Task ###
