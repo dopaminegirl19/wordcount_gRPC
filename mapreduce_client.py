@@ -1,5 +1,6 @@
 import logging
 import sys
+import argparse
 
 import grpc
 
@@ -7,10 +8,35 @@ import mapreduce_pb2
 import mapreduce_pb2_grpc
 
 ## === USER INPUT ====
-p2inputs = 'inputs'
-p2intermediate = 'outputs/intermediate'
-p2outputs = 'outputs/out'
-M = 4
+parser = argparse.ArgumentParser()
+
+parser.add_argument(
+    '--p2inputs',
+    default='inputs',
+    help='provide an string path to input .txt files'
+)
+parser.add_argument(
+    '--p2intermediate',
+    default='outputs/intermediate',
+    help='provide an string path where to intermediate output files'
+)
+parser.add_argument(
+    '--p2outputs',
+    default='outputs/out',
+    help='provide an string path where to save the final output files'
+)
+parser.add_argument(
+    '--M',
+    default=4,
+    help='how many buckets? (int)'
+)
+
+inputs = parser.parse_args()
+
+# p2inputs = 'inputs'
+# p2intermediate = 'outputs/intermediate'
+# p2outputs = 'outputs/out'
+# M = 4
 ## ===================
   
 def run():
@@ -22,9 +48,9 @@ def run():
     print("=== Starting map.")
     print("=== Map files:")
     responses = stub.Map(mapreduce_pb2.MapRequest(
-        input_path = p2inputs, 
-        output_path = p2intermediate, 
-        M=M
+        input_path = input.p2inputs, 
+        output_path = input.p2intermediate, 
+        M = input.M
         ))
     for response in responses:
         print(response.path)
@@ -33,14 +59,14 @@ def run():
     print("=== Map complete. Starting reduce. ")
     print("=== Reduce files:")
     responses = stub.Reduce(mapreduce_pb2.ReduceRequest(
-        input_path = p2intermediate, 
-        output_path =p2outputs
+        input_path = input.p2intermediate, 
+        output_path = input.p2outputs
         ))
     for response in responses:
         print(response.path)
     
     # Terminate:
-    print("=== Reduce complete. Final output files at: {}.".format(p2outputs))
+    print("=== Reduce complete. Final output files at: {}.".format(input.p2outputs))
     print("=== Task complete. Servers and client will now exit.")
     response = stub.Stop(mapreduce_pb2.StopRequest(shouldstop = True))
     sys.exit(0)
