@@ -50,7 +50,7 @@ def run():
     responses = stub.Map(mapreduce_pb2.MapRequest(
         input_path = clinput.p2inputs, 
         output_path = clinput.p2intermediate, 
-        M = clinput.M
+        M = int(clinput.M)
         ))
     for response in responses:
         print(response.path)
