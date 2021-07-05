@@ -36,13 +36,16 @@ See **Map Task** and **Reduce Task** sections for details.
 ```
 1. Next, clone the repo:
  ``` git clone https://github.com/dopaminegirl19/wordcount_gRPC.git```
- - You can use the inputs folder provided in the repo, or your own. In the case of the latter, open up  ```mapreduce_client.py``` and update  ```p2inputs``` as the relative path to your desired inputs folder.
- - Similarly, you can specify the desired path to your outputs folder in  ```mapreduce_client.py```.
 1. Then ```cd wordcount_gRPC``` or wherever your cloned repo is.
 1. Open up a terminal window and start the server (make sure your virtualenv from before is activated):
  ``` python mapreduce_server.py```
 1. In another terminal window, start the client (also in the virtualenv):
   ``` python mapreduce_client.py```
+  - Default inputs are provided, but you can also flag the following command line arguments:
+  - ```--p2inputs``` path to inputs folder
+  - ```--p2intermediate``` path to intermediate outputs folder
+  - ```--p2outputs``` path to final outputs folder
+  - ```--M``` number of buckets
 1. The server feeds metadata about the process to the client, so in your client terminal you will be informed as the output files are generated and saved. 
  
 ## Brief overview of code ##
