@@ -30,13 +30,7 @@ parser.add_argument(
     default=4,
     help='how many buckets? (int)'
 )
-
 clinput = parser.parse_args()
-
-# p2inputs = 'inputs'
-# p2intermediate = 'outputs/intermediate'
-# p2outputs = 'outputs/out'
-# M = 4
 ## ===================
   
 def run():
