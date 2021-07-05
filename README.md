@@ -40,8 +40,7 @@ See **Map Task** and **Reduce Task** sections for details.
 1. Open up a terminal window and start the server (make sure your virtualenv from before is activated):
  ``` python mapreduce_server.py```
 1. In another terminal window, start the client (also in the virtualenv):
-  ``` python mapreduce_client.py```
-    - Default inputs are provided, but you can also flag the following command line arguments:
+  ``` python mapreduce_client.py```. Default inputs are provided, but you can also flag the following command line arguments:
     - ```--p2inputs``` path to inputs folder
     - ```--p2intermediate``` path to intermediate outputs folder
     - ```--p2outputs``` path to final outputs folder
