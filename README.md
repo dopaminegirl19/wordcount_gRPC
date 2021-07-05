@@ -87,6 +87,6 @@ The map task returns a ```stream``` of output file names, which are displayed to
  Currently, the client sends a single input path to the server. For additional flexibility, a new bidirectional streaming RPC would allow the user to specify by filename which .txt files to send to the system for word count.
  
  ### Load balancing ###
- If intended for heavy use, the system may benefit from a load balancing proxy, which would distributed computing demands across multiple servers. 
+ If intended for heavy use, the system may benefit from a load balancing proxy, which would distribute computing demands across multiple servers. 
  
  
