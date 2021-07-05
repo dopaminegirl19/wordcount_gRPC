@@ -31,7 +31,7 @@ parser.add_argument(
     help='how many buckets? (int)'
 )
 
-inputs = parser.parse_args()
+clinput = parser.parse_args()
 
 # p2inputs = 'inputs'
 # p2intermediate = 'outputs/intermediate'
@@ -48,9 +48,9 @@ def run():
     print("=== Starting map.")
     print("=== Map files:")
     responses = stub.Map(mapreduce_pb2.MapRequest(
-        input_path = input.p2inputs, 
-        output_path = input.p2intermediate, 
-        M = input.M
+        input_path = clinput.p2inputs, 
+        output_path = clinput.p2intermediate, 
+        M = clinput.M
         ))
     for response in responses:
         print(response.path)
@@ -59,14 +59,14 @@ def run():
     print("=== Map complete. Starting reduce. ")
     print("=== Reduce files:")
     responses = stub.Reduce(mapreduce_pb2.ReduceRequest(
-        input_path = input.p2intermediate, 
-        output_path = input.p2outputs
+        input_path = clinput.p2intermediate, 
+        output_path = clinput.p2outputs
         ))
     for response in responses:
         print(response.path)
     
     # Terminate:
-    print("=== Reduce complete. Final output files at: {}.".format(input.p2outputs))
+    print("=== Reduce complete. Final output files at: {}.".format(clinput.p2outputs))
     print("=== Task complete. Servers and client will now exit.")
     response = stub.Stop(mapreduce_pb2.StopRequest(shouldstop = True))
     sys.exit(0)
