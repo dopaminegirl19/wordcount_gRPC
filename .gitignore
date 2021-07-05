@@ -1,3 +1,5 @@
 *.txt
 outputs/
 .DS_Store
+__pycache__/mapreduce_pb2.cpython-37.pyc
+__pycache__/mapreduce_pb2_grpc.cpython-37.pyc
