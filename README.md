@@ -41,11 +41,11 @@ See **Map Task** and **Reduce Task** sections for details.
  ``` python mapreduce_server.py```
 1. In another terminal window, start the client (also in the virtualenv):
   ``` python mapreduce_client.py```
-  - Default inputs are provided, but you can also flag the following command line arguments:
-  - ```--p2inputs``` path to inputs folder
-  - ```--p2intermediate``` path to intermediate outputs folder
-  - ```--p2outputs``` path to final outputs folder
-  - ```--M``` number of buckets
+    - Default inputs are provided, but you can also flag the following command line arguments:
+    - ```--p2inputs``` path to inputs folder
+    - ```--p2intermediate``` path to intermediate outputs folder
+    - ```--p2outputs``` path to final outputs folder
+    - ```--M``` number of buckets
 1. The server feeds metadata about the process to the client, so in your client terminal you will be informed as the output files are generated and saved. 
  
 ## Brief overview of code ##
