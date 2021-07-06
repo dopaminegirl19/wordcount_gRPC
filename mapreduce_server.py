@@ -28,7 +28,8 @@ def map_one_file(path, n, M, output_path):
     ========== Arguments: ==========
     fpath: string, path to .txt file
     n: int, map task id
-    m: int, number of buckets
+    M: int, number of buckets
+    output_path: string, path to where to save intermediate output files
     ================================
     """
     
